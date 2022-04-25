@@ -21,7 +21,7 @@ class AuthControllerUnitTests {
     @TestConfiguration
     class ControllerTestConfig {
         @Bean
-        fun userService() = mockk<AuthService>()
+        fun authService() = mockk<AuthService>()
     }
 
     @Autowired
