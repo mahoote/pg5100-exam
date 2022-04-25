@@ -3,6 +3,7 @@ package no.kristiania.pg5100exam.unittests.user
 import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.controllers.user.UserInfo
+import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.models.user.UserEntity
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
@@ -53,20 +54,23 @@ class UserControllerUnitTests {
             .andReturn()
     }
 
-    // TODO: Figure out post!
-//    @Test
-//    fun shouldRegisterUser() {
-//        val newUser = UserInfo("new_user_134", "password123")
-//
-//        every { userService.registerUser(any()) } answers {
-//            UserEntity(username = newUser.username, password = newUser.password)
-//        }
-//
-//        mockMvc.post("/api/user/register") {
-//        }
-//            .andExpect { status { isOk() } }
-//            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-//            .andReturn()
-//    }
+    @Test
+    fun shouldRegisterUser() {
+        val newUserEntity = UserEntity(username = "new_user_134", password = "password123", authorities = mutableListOf(AuthorityEntity(1, "USER")))
+
+        every { userService.registerUser(any()) } answers {
+            newUserEntity
+        }
+
+        mockMvc.post("/api/user/register") {
+            contentType = MediaType.APPLICATION_JSON
+            content = "{\n" +
+                    "    \"username\":\"new_user_134\",\n" +
+                    "    \"password\":\"password123\"\n" +
+                    "}"
+        }
+            .andExpect { status { is2xxSuccessful() } }
+            .andReturn()
+    }
 
 }

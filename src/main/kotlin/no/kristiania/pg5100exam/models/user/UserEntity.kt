@@ -30,8 +30,8 @@ data class UserEntity(
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_authorities",
-        joinColumns = [JoinColumn(name = "authority_id")],
-        inverseJoinColumns = [JoinColumn(name = "user_id")]
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "authority_id")]
     )
     val authorities: MutableList<AuthorityEntity> = mutableListOf()
 )

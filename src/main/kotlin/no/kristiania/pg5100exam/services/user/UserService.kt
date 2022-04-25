@@ -36,8 +36,6 @@ class UserService(
     }
 
     fun registerUser(userInfo: UserInfo): UserEntity? {
-        println(userInfo.toString())
-
         val newUser = UserEntity(username = userInfo.username, password = BCryptPasswordEncoder().encode(userInfo.password))
         authService.getAuthority("USER")?.let { newUser.authorities.add(it) }
         return userRepo.save(newUser)

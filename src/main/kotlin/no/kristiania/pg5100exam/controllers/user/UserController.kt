@@ -9,10 +9,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 class UserController(@Autowired private val userService: UserService) {
 
-    @GetMapping("/all")
+    @GetMapping("/user/all")
     fun getAuthorities(): ResponseEntity<List<UserEntity>> {
         return ResponseEntity.ok().body(userService.getUsers())
     }
