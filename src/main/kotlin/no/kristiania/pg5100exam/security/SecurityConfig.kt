@@ -34,7 +34,7 @@ class SecurityConfig(
             .antMatchers("/api/login").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/user/**").hasAnyAuthority("USER", "ADMIN")
-            .antMatchers("/api/authority/**").hasAuthority("ADMIN")
+            .antMatchers("/api/authentication/**").hasAuthority("ADMIN")
         http.authorizeRequests().anyRequest().authenticated()
         http.addFilter(authenticationFilter)
         http.addFilterBefore(CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)

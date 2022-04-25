@@ -19,5 +19,5 @@ data class AnimalBreedEntity(
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id")
-    val typeId: AnimalTypeEntity?,
+    val type: AnimalTypeEntity?,
 )

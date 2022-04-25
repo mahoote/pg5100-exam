@@ -23,7 +23,7 @@ data class AnimalEntity(
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "breed_id")
-    val breedId: AnimalBreedEntity?,
+    val breed: AnimalBreedEntity?,
 
     @Column(name = "health")
     val health: String?,
