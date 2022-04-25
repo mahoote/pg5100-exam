@@ -12,4 +12,8 @@ class AuthService(@Autowired private val authorityRepo: AuthorityRepo) {
         return authorityRepo.findAll()
     }
 
+    fun getAuthority(title: String): AuthorityEntity? {
+        return authorityRepo.getAuthority(title)
+    }
+
 }
