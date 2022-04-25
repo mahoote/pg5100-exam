@@ -16,5 +16,3 @@ class AuthController(@Autowired private val authService: AuthService) {
     }
 
 }
-
-data class AuthorityInfo(val title: String)
