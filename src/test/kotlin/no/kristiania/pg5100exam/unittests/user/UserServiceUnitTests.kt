@@ -35,5 +35,26 @@ class UserServiceUnitTests {
         assert(users?.first { it.username == oneUsername}?.password == onePassword)
     }
 
+    @Test
+    fun shouldRegisterNewUser() {
+        val newUsername = "new_user_134"
+        val newPassword = "password123"
+
+        val newUserEntity = UserEntity(username = newUsername, password = newPassword)
+
+        every { authService.getAuthority(any()) } answers {
+            AuthorityEntity(1, "USER")
+        }
+
+        every { userRepo.save(any()) } answers {
+            newUserEntity
+        }
+
+        val createdUser = userService.registerUser(UserInfo(newUsername, newPassword))
+
+        assert(createdUser?.username == newUsername)
+        assertFalse(createdUser?.password != newPassword)
+    }
+
 
 }

@@ -6,15 +6,18 @@ import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
+@ExtendWith(SpringExtension::class)
 @WebMvcTest
 @AutoConfigureMockMvc(addFilters = false)
 class AuthControllerUnitTests {
