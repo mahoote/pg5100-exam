@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AuthorityRepo: JpaRepository<AuthorityEntity, Long> {
+interface AuthRepo: JpaRepository<AuthorityEntity, Long> {
 
     fun getAuthorityByTitle(title: String): AuthorityEntity?
 
