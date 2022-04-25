@@ -12,4 +12,8 @@ class AnimalService(@Autowired private val animalRepo: AnimalRepo) {
         return animalRepo.findAll()
     }
 
+    fun getAnimalByName(name: String): AnimalEntity? {
+        return animalRepo.findByName(name)
+    }
+
 }
