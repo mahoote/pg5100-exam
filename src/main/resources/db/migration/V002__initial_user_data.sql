@@ -1,5 +1,5 @@
 insert into users
-values (nextval('users_id_seq'), 'admin', now(), true, '$2a$12$6wZBAkNhsTI2efyAL0914eIIXINx.Y01Mx5lUEMfVotRkk1Cjyg3e');
+values (nextval('users_id_seq'), 'admin', now(), true, '$2a$12$IRjwrAviyElbBxZ5tfCz4OtP1QCPfXV7r.4r0ONr3cQrMSUXYoR2S');
 
 insert into authorities
 values (nextval('authorities_id_seq'), 'ADMIN'),
