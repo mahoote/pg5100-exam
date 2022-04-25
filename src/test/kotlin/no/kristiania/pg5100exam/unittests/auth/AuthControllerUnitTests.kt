@@ -42,17 +42,10 @@ class AuthControllerUnitTests {
             mutableListOf(admin, user)
         }
 
-        val response = mockMvc.get("/api/authority/all") {
-
-        }
+        mockMvc.get("/api/authority/all")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
-
-        val authorities = response.response.contentAsString
-
-        assert(authorities.contains("ADMIN"))
-        assert(authorities.contains("USER"))
     }
 
 }

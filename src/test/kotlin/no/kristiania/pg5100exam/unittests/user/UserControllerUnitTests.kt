@@ -45,7 +45,7 @@ class UserControllerUnitTests {
             mutableListOf(userOne, userTwo)
         }
 
-        mockMvc.get("/api/user/all"){}
+        mockMvc.get("/api/user/all")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
