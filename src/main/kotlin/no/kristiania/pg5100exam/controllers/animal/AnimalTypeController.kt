@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/shelter")
+@RequestMapping("/api/shelter/type")
 class AnimalTypeController(@Autowired private val animalTypeService: AnimalTypeService) {
 
     @GetMapping("/all")

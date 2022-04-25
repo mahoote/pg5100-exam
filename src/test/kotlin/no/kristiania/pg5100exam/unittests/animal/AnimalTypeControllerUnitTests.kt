@@ -3,7 +3,6 @@ package no.kristiania.pg5100exam.unittests.animal
 import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.models.animal.AnimalTypeEntity
-import no.kristiania.pg5100exam.models.user.UserEntity
 import no.kristiania.pg5100exam.services.animal.AnimalTypeService
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
@@ -49,7 +48,7 @@ class AnimalTypeControllerUnitTests {
             mutableListOf(typeEntity1, typeEntity2)
         }
 
-        val types = mockMvc.get("/api/shelter/all")
+        mockMvc.get("/api/shelter/type/all")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("$") {isArray()} }
