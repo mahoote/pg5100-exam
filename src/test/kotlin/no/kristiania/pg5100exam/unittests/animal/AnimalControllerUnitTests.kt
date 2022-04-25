@@ -89,7 +89,7 @@ class AnimalControllerUnitTests {
                     "    \"name\": \"$dogName\"\n" +
                     "}"
         }
-            .andExpect { status { isOk() } }
+            .andExpect { status { is2xxSuccessful() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
     }
