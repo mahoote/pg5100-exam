@@ -1,11 +1,10 @@
-package no.kristiania.pg5100exam.unittests
+package no.kristiania.pg5100exam.unittests.user
 
 import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.controllers.user.UserInfo
 import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.models.user.UserEntity
-import no.kristiania.pg5100exam.repos.user.AuthorityRepo
 import no.kristiania.pg5100exam.repos.user.UserRepo
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService

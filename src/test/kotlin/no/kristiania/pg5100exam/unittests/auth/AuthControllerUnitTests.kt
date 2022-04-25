@@ -1,9 +1,10 @@
-package no.kristiania.pg5100exam.unittests
+package no.kristiania.pg5100exam.unittests.auth
 
 import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.services.user.AuthService
+import no.kristiania.pg5100exam.services.user.UserService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -22,6 +23,8 @@ class AuthControllerUnitTests {
     class ControllerTestConfig {
         @Bean
         fun authService() = mockk<AuthService>()
+        @Bean
+        fun userService() = mockk<UserService>()
     }
 
     @Autowired

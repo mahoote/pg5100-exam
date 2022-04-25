@@ -2,7 +2,6 @@ package no.kristiania.pg5100exam.services.user
 
 import no.kristiania.pg5100exam.controllers.user.UserInfo
 import no.kristiania.pg5100exam.models.user.UserEntity
-import no.kristiania.pg5100exam.repos.user.AuthorityRepo
 import no.kristiania.pg5100exam.repos.user.UserRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.authority.SimpleGrantedAuthority
