@@ -2,6 +2,7 @@ package no.kristiania.pg5100exam.unittests.user
 
 import io.mockk.every
 import io.mockk.mockk
+import no.kristiania.pg5100exam.controllers.user.UserInfo
 import no.kristiania.pg5100exam.models.user.UserEntity
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
@@ -50,5 +52,21 @@ class UserControllerUnitTests {
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
     }
+
+    // TODO: Figure out post!
+//    @Test
+//    fun shouldRegisterUser() {
+//        val newUser = UserInfo("new_user_134", "password123")
+//
+//        every { userService.registerUser(any()) } answers {
+//            UserEntity(username = newUser.username, password = newUser.password)
+//        }
+//
+//        mockMvc.post("/api/user/register") {
+//        }
+//            .andExpect { status { isOk() } }
+//            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+//            .andReturn()
+//    }
 
 }
