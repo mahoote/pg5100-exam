@@ -13,18 +13,4 @@ class AuthService(@Autowired private val authorityRepo: AuthorityRepo) {
         return authorityRepo.findAll()
     }
 
-    fun getAuthorityByTitle(title: String): AuthorityEntity? {
-        return authorityRepo.getByTitle(title)
-    }
-
-    fun addAuthority(newAuthorityInfo: AuthorityInfo): AuthorityEntity {
-        val newAuthority = AuthorityEntity(null, newAuthorityInfo.title)
-        return authorityRepo.save(newAuthority)
-    }
-
-    fun deleteAuthority(authorityInfo: AuthorityInfo) {
-        val existingAuthority = getAuthorityByTitle(authorityInfo.title)
-        existingAuthority?.id?.let { authorityRepo.deleteById(it) }
-    }
-
 }
