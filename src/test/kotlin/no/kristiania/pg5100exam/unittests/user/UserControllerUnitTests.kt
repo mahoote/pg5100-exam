@@ -2,9 +2,9 @@ package no.kristiania.pg5100exam.unittests.user
 
 import io.mockk.every
 import io.mockk.mockk
-import no.kristiania.pg5100exam.controllers.user.UserInfo
 import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.models.user.UserEntity
+import no.kristiania.pg5100exam.services.animal.AnimalTypeService
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
 import org.junit.jupiter.api.Test
@@ -27,6 +27,8 @@ class UserControllerUnitTests {
 
     @TestConfiguration
     class ControllerTestConfig {
+        @Bean
+        fun animalTypeService() = mockk<AnimalTypeService>()
         @Bean
         fun authService() = mockk<AuthService>()
         @Bean
@@ -62,7 +64,7 @@ class UserControllerUnitTests {
             newUserEntity
         }
 
-        mockMvc.post("/api/user/register") {
+        mockMvc.post("/api/register") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
                     "    \"username\":\"new_user_134\",\n" +

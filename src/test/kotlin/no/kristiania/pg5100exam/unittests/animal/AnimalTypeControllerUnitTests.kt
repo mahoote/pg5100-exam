@@ -1,8 +1,9 @@
-package no.kristiania.pg5100exam.unittests.auth
+package no.kristiania.pg5100exam.unittests.animal
 
 import io.mockk.every
 import io.mockk.mockk
-import no.kristiania.pg5100exam.models.user.AuthorityEntity
+import no.kristiania.pg5100exam.models.animal.AnimalTypeEntity
+import no.kristiania.pg5100exam.models.user.UserEntity
 import no.kristiania.pg5100exam.services.animal.AnimalTypeService
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.get
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
 @AutoConfigureMockMvc(addFilters = false)
-class AuthControllerUnitTests {
+class AnimalTypeControllerUnitTests {
 
     @TestConfiguration
     class ControllerTestConfig {
@@ -34,23 +35,24 @@ class AuthControllerUnitTests {
     }
 
     @Autowired
-    private lateinit var authService: AuthService
+    private lateinit var animalTypeService: AnimalTypeService
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @Test
-    fun shouldGetAllAuthorities() {
-        val admin = AuthorityEntity(title = "ADMIN")
-        val user = AuthorityEntity(title = "USER")
+    fun shouldGetAllAnimalTypes() {
+        val typeEntity1 = AnimalTypeEntity(1, "Mammals")
+        val typeEntity2 = AnimalTypeEntity(2, "Birds")
 
-        every { authService.getAuthorities() } answers {
-            mutableListOf(admin, user)
+        every { animalTypeService.getTypes() } answers {
+            mutableListOf(typeEntity1, typeEntity2)
         }
 
-        mockMvc.get("/api/authority/all")
+        val types = mockMvc.get("/api/shelter/all")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andExpect { jsonPath("$") {isArray()} }
             .andReturn()
     }
 
