@@ -21,6 +21,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
@@ -66,6 +67,30 @@ class AnimalControllerUnitTests {
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("$") {isArray()} }
+            .andReturn()
+    }
+
+    @Test
+    fun shouldGetAnimalByName() {
+        val mammalType = AnimalTypeEntity(1, "Mammal")
+
+        val dogBreed = AnimalBreedEntity(1, "Dog", mammalType)
+
+        val dogName = "Fido"
+        val dog = AnimalEntity(1, dogName, 4, dogBreed, "Sporty and fine.")
+
+        every { animalService.getAnimalByName(dogName) } answers {
+            dog
+        }
+
+        mockMvc.post("/api/shelter/animal") {
+            contentType = MediaType.APPLICATION_JSON
+            content = "{\n" +
+                    "    \"name\": \"$dogName\"\n" +
+                    "}"
+        }
+            .andExpect { status { isOk() } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
     }
 
