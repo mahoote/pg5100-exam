@@ -6,11 +6,13 @@ import no.kristiania.pg5100exam.models.animal.AnimalEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
+import javax.transaction.Transactional
 
 interface AnimalRepo: JpaRepository<AnimalEntity, Long> {
 
     fun findByNumber(number: Long): AnimalEntity?
 
+    @Transactional
     fun deleteByNumber(number: Long)
 
 }
