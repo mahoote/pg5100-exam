@@ -42,6 +42,10 @@ class UserServiceUnitTests {
 
         val newUserEntity = UserEntity(username = newUsername, password = newPassword)
 
+        every { userRepo.findByUsername(newUsername) } answers {
+            null
+        }
+
         every { authService.getAuthority(any()) } answers {
             AuthorityEntity(1, "USER")
         }

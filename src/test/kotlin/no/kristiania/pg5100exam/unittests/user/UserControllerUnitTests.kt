@@ -70,7 +70,7 @@ class UserControllerUnitTests {
             newUserEntity
         }
 
-        mockMvc.post("/api/register") {
+        mockMvc.post("/api/user/new") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
                     "    \"username\":\"new_user_134\",\n" +

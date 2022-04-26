@@ -12,9 +12,9 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
 @SpringBootTest
-@ActiveProfiles("tests")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
+@ActiveProfiles("tests")
 class FullAuthIntegrationTests {
 
     @Autowired
@@ -23,7 +23,7 @@ class FullAuthIntegrationTests {
     @Test
     fun shouldGetAllAuthoritiesIntegrationTest() {
 
-        val loggedInUser = mockMvc.post("/api/login") {
+        val loggedInUser = mockMvc.post("/api/authentication") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
                     "    \"username\":\"admin\"," +
@@ -36,7 +36,7 @@ class FullAuthIntegrationTests {
 
         val theCookie = loggedInUser.response.getCookie("access_token")
 
-        mockMvc.get("/api/authentication/all") {
+        mockMvc.get("/api/user/auth/all") {
             theCookie?.let { cookie(it) }
         }
             .andExpect { status { isOk() } }

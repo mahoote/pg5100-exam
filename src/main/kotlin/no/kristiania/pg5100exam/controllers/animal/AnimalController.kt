@@ -3,7 +3,6 @@ package no.kristiania.pg5100exam.controllers.animal
 import no.kristiania.pg5100exam.models.animal.AnimalEntity
 import no.kristiania.pg5100exam.services.animal.AnimalService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -22,9 +21,7 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
     @GetMapping("/animal")
     fun getAnimal(@RequestParam number: String): ResponseEntity<AnimalEntity?> {
         val createdAnimal = animalService.getAnimalByNumber(number.toLong())
-        val uri =
-            URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/animal").toUriString())
-        return ResponseEntity.created(uri).body(createdAnimal)
+        return ResponseEntity.ok().body(createdAnimal)
     }
 
     @PostMapping("/new")
@@ -32,8 +29,7 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         val createdAnimal = animalService.addAnimal(animalInfo)
         val uri =
             URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/new").toUriString())
-
-        return sendResponse(createdAnimal, uri)
+        return sendCreatedResponse(createdAnimal, uri)
 
     }
 
@@ -42,25 +38,21 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         val updatedAnimal = animalService.updateAnimal(animalInfo)
         val uri =
             URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/update").toUriString())
-
-        return sendResponse(updatedAnimal, uri)
+        return sendCreatedResponse(updatedAnimal, uri)
     }
 
     @DeleteMapping("/delete")
     fun deleteAnimal(@RequestParam number: Long): ResponseEntity<String> {
         val deletedAnimal = animalService.deleteAnimal(number)
-        val uri =
-            URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/delete").toUriString())
-        return ResponseEntity.created(uri).body(deletedAnimal)
+        return ResponseEntity.ok().body(deletedAnimal)
     }
 
 
-    private fun sendResponse(animal: AnimalEntity?, uri: URI): ResponseEntity<AnimalEntity?> {
+    private fun sendCreatedResponse(animal: AnimalEntity?, uri: URI): ResponseEntity<AnimalEntity?> {
         if(animal != null)
             return ResponseEntity.created(uri).body(animal)
 
-        // Will return 422 due to some value being wrong.
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
+        return ResponseEntity.badRequest().build()
     }
 
 }

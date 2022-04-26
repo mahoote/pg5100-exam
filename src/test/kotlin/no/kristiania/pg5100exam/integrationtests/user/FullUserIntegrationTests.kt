@@ -10,11 +10,12 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+import kotlin.random.Random.Default.nextInt
 
 @SpringBootTest
-@ActiveProfiles("tests")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
+@ActiveProfiles("tests")
 class FullUserIntegrationTests {
 
     @Autowired
@@ -22,7 +23,7 @@ class FullUserIntegrationTests {
 
     @Test
     fun shouldGetAllUsersIntegrationTest() {
-        val loggedInUser = mockMvc.post("/api/login") {
+        val loggedInUser = mockMvc.post("/api/authentication") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
                     "    \"username\":\"admin\"," +
@@ -45,12 +46,14 @@ class FullUserIntegrationTests {
     }
 
     @Test
-    fun shouldRegisterNewUserIntegrationTest() {
+    fun shouldRegisterNewUserAndAuthenticateIntegrationTest() {
 
-        val newUser = "new_user_123"
+        val rand = nextInt()
+
+        val newUser = "new_user_$rand"
         val newPassword = "newUserPassword123"
 
-        mockMvc.post("/api/register") {
+        mockMvc.post("/api/user/new") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
                     "    \"username\":\"$newUser\"," +
@@ -62,12 +65,12 @@ class FullUserIntegrationTests {
             .andReturn()
 
 
-        val loggedInUser = mockMvc.post("/api/login") {
+        val loggedInUser = mockMvc.post("/api/authentication") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
-                    "    \"username\":\"admin\"," +
+                    "    \"username\":\"$newUser\"," +
                     "\n" +
-                    "    \"password\":\"pirate\"\n" +
+                    "    \"password\":\"$newPassword\"\n" +
                     "}"
         }
             .andExpect { status { isOk() } }

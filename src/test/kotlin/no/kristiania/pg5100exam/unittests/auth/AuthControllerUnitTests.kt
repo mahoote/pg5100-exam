@@ -54,7 +54,7 @@ class AuthControllerUnitTests {
             mutableListOf(admin, user)
         }
 
-        mockMvc.get("/api/authentication/all")
+        mockMvc.get("/api/user/auth/all")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()

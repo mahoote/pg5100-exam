@@ -23,8 +23,8 @@ class CustomAuthorizationFilter: OncePerRequestFilter() {
         val token = request.cookies?.firstOrNull{it.name == "access_token"}?.value
         when {
             token.isNullOrBlank() -> filterChain.doFilter(request, response)
-            request.servletPath.contains("/api/login") -> filterChain.doFilter(request, response)
-            request.servletPath.contains("/api/register") -> filterChain.doFilter(request, response)
+            request.servletPath.contains("/api/authentication") -> filterChain.doFilter(request, response)
+            request.servletPath.contains("/api/user/new") -> filterChain.doFilter(request, response)
             else -> {
                 try {
                     val decodedToken = JwtUtil.decodeToken(token)

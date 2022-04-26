@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User
 import java.util.*
 
 object JwtUtil {
-    private const val SECRET = "do_not_store_secrets_in_the_source_code"
+    private const val SECRET = "did_not_know_if_you_wanted_this_in_its_own_file"
 
     private val algorithm = Algorithm.HMAC256(SECRET)
 
