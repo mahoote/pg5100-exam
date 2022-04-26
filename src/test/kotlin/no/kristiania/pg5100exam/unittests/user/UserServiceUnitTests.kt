@@ -31,8 +31,8 @@ class UserServiceUnitTests {
 
         val users = userService.getUsers()
 
-        assert(users?.size == 2)
-        assert(users?.first { it.username == oneUsername}?.password == onePassword)
+        assert(users.size == 2)
+        assert(users.first { it.username == oneUsername}.password == onePassword)
     }
 
     @Test

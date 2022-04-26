@@ -15,7 +15,7 @@ import kotlin.random.Random.Default.nextInt
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 class FullUserIntegrationTests {
 
     @Autowired

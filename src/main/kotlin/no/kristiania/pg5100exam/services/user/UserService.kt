@@ -31,7 +31,7 @@ class UserService(
         throw Exception("Bad")
     }
 
-    fun getUsers(): List<UserEntity>? {
+    fun getUsers(): List<UserEntity> {
         return userRepo.findAll()
     }
 
