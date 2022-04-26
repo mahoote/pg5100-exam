@@ -26,6 +26,7 @@ class CustomAuthenticationFilter(
         val userRequest = jacksonObjectMapper().readValue(body, LoginInfo::class.java)
         // Authenticate the token.
         val auth = UsernamePasswordAuthenticationToken(userRequest.username, userRequest.password)
+        println(auth.toString())
         return authManager.authenticate(auth)
     }
 

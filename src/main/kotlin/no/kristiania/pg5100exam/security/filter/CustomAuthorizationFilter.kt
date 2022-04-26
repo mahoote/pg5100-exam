@@ -11,6 +11,7 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_FORBIDDEN
+import kotlin.math.log
 
 class CustomAuthorizationFilter: OncePerRequestFilter() {
 
@@ -27,10 +28,10 @@ class CustomAuthorizationFilter: OncePerRequestFilter() {
             else -> {
                 try {
                     val decodedToken = JwtUtil.decodeToken(token)
-                    val email = decodedToken.subject
+                    val username = decodedToken.subject
                     val authority =
                         decodedToken.getClaim("authorities").asList(String::class.java).map { SimpleGrantedAuthority(it) }
-                    val authenticationToken = UsernamePasswordAuthenticationToken(email, null, authority)
+                    val authenticationToken = UsernamePasswordAuthenticationToken(username, null, authority)
                     SecurityContextHolder.getContext().authentication = authenticationToken
                     filterChain.doFilter(request, response)
                 } catch (e: Exception) {

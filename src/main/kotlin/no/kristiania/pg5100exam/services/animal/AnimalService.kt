@@ -21,7 +21,6 @@ class AnimalService(
     }
 
     fun addAnimal(animal: AnimalInfo): AnimalEntity? {
-
         val breedEntity = animal.breed?.let { animalBreedService.getBreed(it) }
 
         // Breed must not be null for the saving to be completed.

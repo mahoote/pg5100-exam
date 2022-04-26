@@ -1,15 +1,15 @@
 create table users
 (
     id       bigserial primary key,
-    username varchar(50),
+    username varchar(50) unique not null,
     created  timestamp,
     enabled  bool,
-    password varchar(100)
+    password varchar(100)       not null
 );
 create table authorities
 (
     id    bigserial primary key,
-    title varchar(50)
+    title varchar(50) unique
 );
 create table users_authorities
 (
