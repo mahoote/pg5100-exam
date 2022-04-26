@@ -22,8 +22,8 @@ class AnimalBreedServiceUnitTests {
 
         val typeEntity = AnimalTypeEntity(type = "Dog")
 
-        val breedEntity1 = AnimalBreedEntity(1, breed1, typeEntity)
-        val breedEntity2 = AnimalBreedEntity(2, breed2, typeEntity)
+        val breedEntity1 = AnimalBreedEntity(1, breed1, typeEntity, typeEntity.id)
+        val breedEntity2 = AnimalBreedEntity(2, breed2, typeEntity, typeEntity.id)
 
         every { animalBreedRepo.findAll() } answers {
             mutableListOf(breedEntity1, breedEntity2)

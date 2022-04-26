@@ -17,7 +17,10 @@ data class AnimalBreedEntity(
     @Column(name = "breed")
     val breed: String,
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type_id")
-    val type: AnimalTypeEntity?,
+    @ManyToOne(targetEntity = AnimalTypeEntity::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    val type: AnimalTypeEntity? = null,
+
+    @Column(name = "type_id")
+    val typeId: Long?,
 )

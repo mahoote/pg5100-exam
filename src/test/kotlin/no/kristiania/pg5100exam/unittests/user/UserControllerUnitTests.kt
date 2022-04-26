@@ -4,6 +4,8 @@ import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.models.user.AuthorityEntity
 import no.kristiania.pg5100exam.models.user.UserEntity
+import no.kristiania.pg5100exam.services.animal.AnimalBreedService
+import no.kristiania.pg5100exam.services.animal.AnimalService
 import no.kristiania.pg5100exam.services.animal.AnimalTypeService
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
@@ -28,7 +30,11 @@ class UserControllerUnitTests {
     @TestConfiguration
     class ControllerTestConfig {
         @Bean
+        fun animalService() = mockk<AnimalService>()
+        @Bean
         fun animalTypeService() = mockk<AnimalTypeService>()
+        @Bean
+        fun animalBreedService() = mockk<AnimalBreedService>()
         @Bean
         fun authService() = mockk<AuthService>()
         @Bean

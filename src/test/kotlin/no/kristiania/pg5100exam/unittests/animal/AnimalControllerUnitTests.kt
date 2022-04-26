@@ -53,8 +53,8 @@ class AnimalControllerUnitTests {
         val mammalType = AnimalTypeEntity(1, "Mammal")
         val birdType = AnimalTypeEntity(2, "Bird")
 
-        val dogBreed = AnimalBreedEntity(1, "Dog", mammalType)
-        val birdBreed = AnimalBreedEntity(2, "Bird", birdType)
+        val dogBreed = AnimalBreedEntity(1, "Dog", mammalType, mammalType.id)
+        val birdBreed = AnimalBreedEntity(2, "Bird", birdType, mammalType.id)
 
         val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
         val bird = AnimalEntity(2, "Jack Sparrow", 2, birdBreed, birdBreed.id, "Always drunk.")
@@ -73,7 +73,7 @@ class AnimalControllerUnitTests {
     @Test
     fun shouldGetAnimalByName() {
         val mammalType = AnimalTypeEntity(1, "Mammal")
-        val dogBreed = AnimalBreedEntity(1, "Dog", mammalType)
+        val dogBreed = AnimalBreedEntity(1, "Dog", mammalType, mammalType.id)
 
         val dogName = "Fido"
         val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
@@ -93,7 +93,7 @@ class AnimalControllerUnitTests {
     @Test
     fun shouldAddNewAnimal() {
         val birdType = AnimalTypeEntity(1, "Bird")
-        val birdBreed = AnimalBreedEntity(1, "Sparrow", birdType)
+        val birdBreed = AnimalBreedEntity(1, "Sparrow", birdType, birdType.id)
         val bird = AnimalEntity(1, "Jack", 2, birdBreed, birdBreed.id, "Always drunk.")
 
         every { animalService.addAnimal(any()) } answers {

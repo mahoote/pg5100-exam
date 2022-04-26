@@ -36,7 +36,7 @@ class FullAuthIntegrationTests {
 
         val theCookie = loggedInUser.response.getCookie("access_token")
 
-        mockMvc.get("/api/authority/all") {
+        mockMvc.get("/api/authentication/all") {
             theCookie?.let { cookie(it) }
         }
             .andExpect { status { isOk() } }

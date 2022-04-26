@@ -21,10 +21,12 @@ data class AnimalEntity(
     @Column(name = "age")
     val age: Int?,
 
+    // Does not exist in the database. Is only assigned to when fetching.
     @ManyToOne(targetEntity = AnimalBreedEntity::class, fetch = FetchType.EAGER)
     @JoinColumn(name = "breed_id", referencedColumnName = "id", insertable = false, updatable = false)
     val breed: AnimalBreedEntity? = null,
 
+    // Is used to get the correct AnimalBreedEntity.
     @Column(name = "breed_id")
     val breedId: Long?,
 
