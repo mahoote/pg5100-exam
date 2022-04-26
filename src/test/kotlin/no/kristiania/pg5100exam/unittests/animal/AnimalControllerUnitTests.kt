@@ -82,7 +82,7 @@ class AnimalControllerUnitTests {
             dog
         }
 
-        mockMvc.get("/api/shelter/animal/{name}", dogName) {
+        mockMvc.get("/api/shelter/animal?name=Fido") {
             accept = MediaType.APPLICATION_JSON
         }
             .andExpect { status { is2xxSuccessful() } }

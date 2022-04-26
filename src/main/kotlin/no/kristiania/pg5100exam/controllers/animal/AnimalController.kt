@@ -18,8 +18,8 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         return ResponseEntity.ok().body(animalService.getAnimals())
     }
 
-    @GetMapping("/animal/{name}")
-    fun getAnimal(@PathVariable("name") name: String): ResponseEntity<AnimalEntity?> {
+    @GetMapping("/animal")
+    fun getAnimal(@RequestParam name: String): ResponseEntity<AnimalEntity?> {
         val createdAnimal = animalService.getAnimalByName(name)
         val uri =
             URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/animal").toUriString())
