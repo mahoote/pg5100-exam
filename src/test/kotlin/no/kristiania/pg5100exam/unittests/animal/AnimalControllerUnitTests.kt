@@ -1,7 +1,9 @@
 package no.kristiania.pg5100exam.unittests.animal
 
+import io.mockk.InternalPlatformDsl.toArray
 import io.mockk.every
 import io.mockk.mockk
+import no.kristiania.pg5100exam.controllers.animal.AnimalInfo
 import no.kristiania.pg5100exam.models.animal.AnimalBreedEntity
 import no.kristiania.pg5100exam.models.animal.AnimalEntity
 import no.kristiania.pg5100exam.models.animal.AnimalTypeEntity
@@ -10,6 +12,7 @@ import no.kristiania.pg5100exam.services.animal.AnimalService
 import no.kristiania.pg5100exam.services.animal.AnimalTypeService
 import no.kristiania.pg5100exam.services.user.AuthService
 import no.kristiania.pg5100exam.services.user.UserService
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
@@ -106,6 +110,34 @@ class AnimalControllerUnitTests {
                     "    \"age\": 2,\n" +
                     "    \"breed\": \"Sparrow\",\n" +
                     "    \"health\": \"Always drunk.\"\n" +
+                    "}"
+        }
+            .andExpect { status { is2xxSuccessful() } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andReturn()
+    }
+
+    @Test
+    fun shouldUpdateExistingAnimal() {
+        val birdId: Long = 1
+        val breedName = "Sparrow"
+
+        val birdType = AnimalTypeEntity(1, "Bird")
+        val birdBreed = AnimalBreedEntity(1, breedName, birdType, birdType.id)
+
+        val animalEntity = AnimalEntity(birdId, 12345, "Tony", 4, birdBreed, birdBreed.id, "Loves to skate.")
+
+        every { animalService.updateAnimal(any()) } answers {
+            animalEntity
+        }
+
+        mockMvc.put("/api/shelter/update") {
+            contentType = MediaType.APPLICATION_JSON
+            content = "{\n" +
+                    "    \"id\": 1,\n" +
+                    "    \"number\": 12345,\n" +
+                    "    \"name\": \"Tony\",\n" +
+                    "    \"health\": \"Loves to skate.\"\n" +
                     "}"
         }
             .andExpect { status { is2xxSuccessful() } }

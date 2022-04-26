@@ -81,7 +81,7 @@ class AnimalServiceUnitTests {
 
         val animalEntity = AnimalEntity(1, animalInfo.number, animalInfo.name, animalInfo.age, birdBreed, birdBreed.id, animalInfo.health)
 
-        every { animalBreedService.getBreedByBreed(breed) } answers {
+        every { animalBreedService.getBreed(breed) } answers {
             birdBreed
         }
 
@@ -97,7 +97,6 @@ class AnimalServiceUnitTests {
 
     @Test
     fun updateAnimalByName() {
-
         val birdId: Long = 1
         val breedName = "Sparrow"
 
@@ -106,33 +105,24 @@ class AnimalServiceUnitTests {
 
         val animalEntity = AnimalEntity(birdId, 12345, "Jack", 4, birdBreed, birdBreed.id, "Always Drunk.")
 
-        // Find the correct breed.
-        every { animalBreedService.getBreedByBreed(breedName) } answers {
-            birdBreed
-        }
-
         // Get the existing entity.
-        every { animalRepo.findById(birdId).get() } answers {
+        every { animalService.findById(birdId) } answers {
             animalEntity
         }
-
-        val newAnimalInfo = AnimalInfo(number = 12345, name = "Tony", health = "Loves to skate.")
-
-        val newNumber = newAnimalInfo.number ?: animalEntity.number
-        val newName = newAnimalInfo.name ?: animalEntity.name
-        val newAge = newAnimalInfo.age ?: animalEntity.age
-        val newBreed = animalBreedService.getBreedByBreed(newAnimalInfo.breed.toString()) ?: animalEntity.breed
-        val newBreedId = newBreed?.id
-        val newHealth = newAnimalInfo.health ?: animalEntity.health
-
-        val updatedEntity = AnimalEntity(birdId, newNumber, newName, newAge, newBreed, newBreedId, newHealth, animalEntity.created)
-
+        // Find the correct breed.
+        every { animalBreedService.getBreed(any()) } answers {
+            birdBreed
+        }
         every { animalRepo.save(any()) } answers {
             firstArg()
         }
 
-//        val update = animalService.updateAnimal()
+        val newAnimalInfo = AnimalInfo(id = birdId, number = 293, name = "Tony", health = "Loves to skate.")
+        val updatedEntity = animalService.updateAnimal(newAnimalInfo)
 
+        assertFalse(updatedEntity?.number == animalEntity.number)
+        assertFalse(updatedEntity?.name == animalEntity.name)
+        assertFalse(updatedEntity?.health == animalEntity.health)
     }
 
 }

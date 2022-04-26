@@ -12,7 +12,7 @@ class AnimalBreedService(@Autowired private val animalBreedRepo: AnimalBreedRepo
         return animalBreedRepo.findAll()
     }
 
-    fun getBreedByBreed(breed: String): AnimalBreedEntity? {
+    fun getBreed(breed: String): AnimalBreedEntity? {
         return animalBreedRepo.findByBreed(breed)
     }
 

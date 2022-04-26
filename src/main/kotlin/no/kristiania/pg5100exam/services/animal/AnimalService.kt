@@ -22,14 +22,12 @@ class AnimalService(
 
     fun addAnimal(animal: AnimalInfo): AnimalEntity? {
 
-        println("${animal.id}, ${animal.number}, ${animal.name}")
-
-        val breedEntity = animal.breed?.let { animalBreedService.getBreedByBreed(it) }
+        val breedEntity = animal.breed?.let { animalBreedService.getBreed(it) }
 
         // Breed must not be null for the saving to be completed.
         if(breedEntity != null && animal.number != null) {
             val newAnimal = AnimalEntity(
-                id = animal.id,
+                id = null,
                 number = animal.number,
                 name = animal.name,
                 age = animal.age,
@@ -39,7 +37,7 @@ class AnimalService(
 
             val a = animalRepo.save(newAnimal)
 
-            // Creates an animalEntity with the breedEntity, instead of it being null.
+            // Creates an animalEntity with the breedEntity, instead of breed being null.
             return AnimalEntity(
                 a.id,
                 a.number,
@@ -55,7 +53,31 @@ class AnimalService(
         return null
     }
 
-    /*fun updateAnimal(animalInfo: AnimalInfo): AnimalEntity {
-    }*/
+    fun findById(id: Long): AnimalEntity? {
+        return animalRepo.findById(id).get()
+    }
+
+    fun updateAnimal(animalInfo: AnimalInfo): AnimalEntity? {
+        // Only update if the animal exists in the db.
+        val existingAnimal = animalInfo.id?.let { findById(it) }
+
+        if(existingAnimal != null) {
+            val getBreed = animalBreedService.getBreed(animalInfo.breed.toString())
+
+            val newNumber = animalInfo.number ?: existingAnimal.number
+            val newName = animalInfo.name ?: existingAnimal.name
+            val newAge = animalInfo.age ?: existingAnimal.age
+            val newBreed = getBreed ?: existingAnimal.breed
+            val newBreedId = newBreed?.id
+            val newHealth = animalInfo.health ?: existingAnimal.health
+
+            val updatedAnimal = AnimalEntity(existingAnimal.id, newNumber, newName, newAge, newBreed, newBreedId, newHealth, existingAnimal.created)
+
+            // Will replace the current AnimalEntity with the new, since IDs match.
+            return animalRepo.save(updatedAnimal)
+        }
+
+        return null
+    }
 
 }

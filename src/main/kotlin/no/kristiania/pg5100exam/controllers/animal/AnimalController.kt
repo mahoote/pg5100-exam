@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/shelter")
@@ -32,8 +33,23 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         val uri =
             URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/new").toUriString())
 
-        if(createdAnimal != null)
-            return ResponseEntity.created(uri).body(createdAnimal)
+        return sendResponse(createdAnimal, uri)
+
+    }
+
+    @PutMapping("/update")
+    fun updateAnimal(@RequestBody animalInfo: AnimalInfo): ResponseEntity<AnimalEntity?> {
+        val updatedAnimal = animalService.updateAnimal(animalInfo)
+        val uri =
+            URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/update").toUriString())
+
+        return sendResponse(updatedAnimal, uri)
+    }
+
+
+    private fun sendResponse(animal: AnimalEntity?, uri: URI): ResponseEntity<AnimalEntity?> {
+        if(animal != null)
+            return ResponseEntity.created(uri).body(animal)
 
         // Will return 422 due to breed being null.
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
@@ -41,4 +57,4 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
 
 }
 
-data class AnimalInfo(val id: Long? = null, val number: Long? = null, val name: String? = null, val age: Int? = null, val breed: String? = null, val health: String? = null)
+data class AnimalInfo(val id: Long? = null, val number: Long? = null, val name: String? = null, val age: Int? = null, val breed: String? = null, val health: String? = null, val created: LocalDateTime? = null)
