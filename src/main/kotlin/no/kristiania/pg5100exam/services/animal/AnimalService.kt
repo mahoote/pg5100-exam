@@ -16,17 +16,21 @@ class AnimalService(
         return animalRepo.findAll()
     }
 
-    fun getAnimalByName(name: String): AnimalEntity? {
-        return animalRepo.findByName(name)
+    fun getAnimalByNumber(number: Long): AnimalEntity? {
+        return animalRepo.findByNumber(number)
     }
 
     fun addAnimal(animal: AnimalInfo): AnimalEntity? {
-        val breedEntity = animalBreedService.getBreed(animal.breed)
+
+        println("${animal.id}, ${animal.number}, ${animal.name}")
+
+        val breedEntity = animal.breed?.let { animalBreedService.getBreedByBreed(it) }
 
         // Breed must not be null for the saving to be completed.
-        if(breedEntity != null) {
+        if(breedEntity != null && animal.number != null) {
             val newAnimal = AnimalEntity(
                 id = animal.id,
+                number = animal.number,
                 name = animal.name,
                 age = animal.age,
                 breedId = breedEntity.id,
@@ -38,6 +42,7 @@ class AnimalService(
             // Creates an animalEntity with the breedEntity, instead of it being null.
             return AnimalEntity(
                 a.id,
+                a.number,
                 a.name,
                 a.age,
                 breedEntity,
@@ -49,5 +54,8 @@ class AnimalService(
 
         return null
     }
+
+    /*fun updateAnimal(animalInfo: AnimalInfo): AnimalEntity {
+    }*/
 
 }

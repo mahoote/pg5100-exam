@@ -56,8 +56,8 @@ class AnimalControllerUnitTests {
         val dogBreed = AnimalBreedEntity(1, "Dog", mammalType, mammalType.id)
         val birdBreed = AnimalBreedEntity(2, "Bird", birdType, mammalType.id)
 
-        val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
-        val bird = AnimalEntity(2, "Jack Sparrow", 2, birdBreed, birdBreed.id, "Always drunk.")
+        val dog = AnimalEntity(1, 12345, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
+        val bird = AnimalEntity(2, 56789, "Jack Sparrow", 2, birdBreed, birdBreed.id, "Always drunk.")
 
         every { animalService.getAnimals() } answers {
             mutableListOf(dog, bird)
@@ -74,15 +74,14 @@ class AnimalControllerUnitTests {
     fun shouldGetAnimalByName() {
         val mammalType = AnimalTypeEntity(1, "Mammal")
         val dogBreed = AnimalBreedEntity(1, "Dog", mammalType, mammalType.id)
+        val dogNum: Long = 12345
+        val dog = AnimalEntity(1, dogNum, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
 
-        val dogName = "Fido"
-        val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
-
-        every { animalService.getAnimalByName(dogName) } answers {
+        every { animalService.getAnimalByNumber(dogNum) } answers {
             dog
         }
 
-        mockMvc.get("/api/shelter/animal?name=Fido") {
+        mockMvc.get("/api/shelter/animal?number=$dogNum") {
             accept = MediaType.APPLICATION_JSON
         }
             .andExpect { status { is2xxSuccessful() } }
@@ -94,7 +93,7 @@ class AnimalControllerUnitTests {
     fun shouldAddNewAnimal() {
         val birdType = AnimalTypeEntity(1, "Bird")
         val birdBreed = AnimalBreedEntity(1, "Sparrow", birdType, birdType.id)
-        val bird = AnimalEntity(1, "Jack", 2, birdBreed, birdBreed.id, "Always drunk.")
+        val bird = AnimalEntity(1, 12345, "Jack", 2, birdBreed, birdBreed.id, "Always drunk.")
 
         every { animalService.addAnimal(any()) } answers {
             bird

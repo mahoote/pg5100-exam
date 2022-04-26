@@ -1,19 +1,24 @@
 package no.kristiania.pg5100exam.models.animal
 
+import org.hibernate.annotations.GenerationTime
 import java.time.LocalDateTime
+import javax.annotation.processing.Generated
 import javax.persistence.*
 
 @Entity
 @Table(name = "animals")
 data class AnimalEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "animals_id_seq")
     @SequenceGenerator(
         name = "animals_id_seq",
         allocationSize = 1
     )
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "animals_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     val id: Long? = null,
+
+    @Column(name = "animal_nr", nullable = false, unique = true)
+    val number: Long? = null,
 
     @Column(name = "animal_name")
     val name: String?,

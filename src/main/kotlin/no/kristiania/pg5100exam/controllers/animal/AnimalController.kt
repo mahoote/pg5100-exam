@@ -19,8 +19,8 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
     }
 
     @GetMapping("/animal")
-    fun getAnimal(@RequestParam name: String): ResponseEntity<AnimalEntity?> {
-        val createdAnimal = animalService.getAnimalByName(name)
+    fun getAnimal(@RequestParam number: String): ResponseEntity<AnimalEntity?> {
+        val createdAnimal = animalService.getAnimalByNumber(number.toLong())
         val uri =
             URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/animal").toUriString())
         return ResponseEntity.created(uri).body(createdAnimal)
@@ -41,4 +41,4 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
 
 }
 
-data class AnimalInfo(val id: Long? = null, val name: String, val age: Int?, val breed: String, val health: String?)
+data class AnimalInfo(val id: Long? = null, val number: Long? = null, val name: String? = null, val age: Int? = null, val breed: String? = null, val health: String? = null)

@@ -1,13 +1,13 @@
 create table animal_types
 (
-    id   bigserial primary key,
+    id          bigserial primary key,
     animal_type varchar(255)
 );
 
 create table animal_breeds
 (
-    id    bigserial primary key,
-    breed varchar(255),
+    id      bigserial primary key,
+    breed   varchar(255),
     type_id bigint,
     constraint fk_type
         foreign key (type_id)
@@ -16,12 +16,13 @@ create table animal_breeds
 
 create table animals
 (
-    id       bigserial primary key,
-    animal_name     varchar(255),
-    age      integer,
-    breed_id bigint,
-    health   varchar(500),
-    created  timestamp,
+    id          bigserial primary key,
+    animal_nr   bigint not null unique ,
+    animal_name varchar(255) not null,
+    age         integer,
+    breed_id    bigint,
+    health      varchar(500),
+    created     timestamp,
     constraint fk_breed
         foreign key (breed_id)
             references animal_breeds (id)

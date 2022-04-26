@@ -20,7 +20,7 @@ class AnimalBreedController(@Autowired private val animalBreedService: AnimalBre
 
     @GetMapping("/{breed}")
     fun getByBreed(@PathVariable("breed") breed: String): ResponseEntity<AnimalBreedEntity> {
-        return ResponseEntity.ok().body(animalBreedService.getBreed(breed))
+        return ResponseEntity.ok().body(animalBreedService.getBreedByBreed(breed))
     }
 
 }
