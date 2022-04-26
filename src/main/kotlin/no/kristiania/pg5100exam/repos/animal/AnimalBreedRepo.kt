@@ -2,6 +2,7 @@ package no.kristiania.pg5100exam.repos.animal
 
 import no.kristiania.pg5100exam.models.animal.AnimalBreedEntity
 import org.springframework.data.jpa.repository.JpaRepository
+import java.util.*
 
 interface AnimalBreedRepo: JpaRepository<AnimalBreedEntity, Long> {
 

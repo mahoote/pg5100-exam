@@ -56,8 +56,8 @@ class AnimalControllerUnitTests {
         val dogBreed = AnimalBreedEntity(1, "Dog", mammalType)
         val birdBreed = AnimalBreedEntity(2, "Bird", birdType)
 
-        val dog = AnimalEntity(1, "Fido", 4, dogBreed, "Sporty and fine.")
-        val bird = AnimalEntity(2, "Jack Sparrow", 2, birdBreed, "Always drunk.")
+        val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
+        val bird = AnimalEntity(2, "Jack Sparrow", 2, birdBreed, birdBreed.id, "Always drunk.")
 
         every { animalService.getAnimals() } answers {
             mutableListOf(dog, bird)
@@ -73,20 +73,40 @@ class AnimalControllerUnitTests {
     @Test
     fun shouldGetAnimalByName() {
         val mammalType = AnimalTypeEntity(1, "Mammal")
-
         val dogBreed = AnimalBreedEntity(1, "Dog", mammalType)
 
         val dogName = "Fido"
-        val dog = AnimalEntity(1, dogName, 4, dogBreed, "Sporty and fine.")
+        val dog = AnimalEntity(1, "Fido", 4, dogBreed, dogBreed.id, "Sporty and fine.")
 
         every { animalService.getAnimalByName(dogName) } answers {
             dog
         }
 
-        mockMvc.post("/api/shelter/animal") {
+        mockMvc.get("/api/shelter/animal/{name}", dogName) {
+            accept = MediaType.APPLICATION_JSON
+        }
+            .andExpect { status { is2xxSuccessful() } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andReturn()
+    }
+
+    @Test
+    fun shouldAddNewAnimal() {
+        val birdType = AnimalTypeEntity(1, "Bird")
+        val birdBreed = AnimalBreedEntity(1, "Sparrow", birdType)
+        val bird = AnimalEntity(1, "Jack", 2, birdBreed, birdBreed.id, "Always drunk.")
+
+        every { animalService.addAnimal(any()) } answers {
+            bird
+        }
+
+        mockMvc.post("/api/shelter/new") {
             contentType = MediaType.APPLICATION_JSON
             content = "{\n" +
-                    "    \"name\": \"$dogName\"\n" +
+                    "    \"name\": \"Jack\",\n" +
+                    "    \"age\": 2,\n" +
+                    "    \"breed\": \"Sparrow\",\n" +
+                    "    \"health\": \"Always drunk.\"\n" +
                     "}"
         }
             .andExpect { status { is2xxSuccessful() } }
