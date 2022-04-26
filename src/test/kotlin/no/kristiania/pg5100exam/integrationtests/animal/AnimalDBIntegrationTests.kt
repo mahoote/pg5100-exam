@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 @Import(AnimalService::class, AnimalBreedService::class)
 class AnimalDBIntegrationTests(@Autowired private val animalService: AnimalService) {
 

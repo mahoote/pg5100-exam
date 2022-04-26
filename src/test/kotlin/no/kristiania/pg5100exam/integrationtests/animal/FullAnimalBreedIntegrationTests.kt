@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.post
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 class FullAnimalBreedIntegrationTests {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 @Import(UserService::class, AuthService::class)
 class UserDBIntegrationTests(@Autowired private val userService: UserService) {
 
