@@ -59,7 +59,7 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         if(animal != null)
             return ResponseEntity.created(uri).body(animal)
 
-        // Will return 422 due to breed being null.
+        // Will return 422 due to some value being wrong.
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
     }
 
