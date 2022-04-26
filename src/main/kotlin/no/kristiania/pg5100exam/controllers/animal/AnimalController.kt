@@ -46,6 +46,14 @@ class AnimalController(@Autowired private val animalService: AnimalService) {
         return sendResponse(updatedAnimal, uri)
     }
 
+    @DeleteMapping("/delete")
+    fun deleteAnimal(@RequestParam number: Long): ResponseEntity<String> {
+        val deletedAnimal = animalService.deleteAnimal(number)
+        val uri =
+            URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/shelter/delete").toUriString())
+        return ResponseEntity.created(uri).body(deletedAnimal)
+    }
+
 
     private fun sendResponse(animal: AnimalEntity?, uri: URI): ResponseEntity<AnimalEntity?> {
         if(animal != null)

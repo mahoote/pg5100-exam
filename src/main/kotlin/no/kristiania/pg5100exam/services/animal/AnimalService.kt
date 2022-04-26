@@ -80,4 +80,16 @@ class AnimalService(
         return null
     }
 
+    fun deleteAnimal(number: Long): String {
+        val existingEntity = getAnimalByNumber(number)
+
+        if(existingEntity != null) {
+            animalRepo.deleteByNumber(number)
+            return "Successful deletion."
+        }
+
+        return "Deletion not complete. Animal number does not exist."
+
+    }
+
 }

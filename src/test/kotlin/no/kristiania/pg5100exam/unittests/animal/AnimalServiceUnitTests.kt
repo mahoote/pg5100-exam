@@ -125,4 +125,22 @@ class AnimalServiceUnitTests {
         assertFalse(updatedEntity?.health == animalEntity.health)
     }
 
+     @Test
+     fun shouldDeleteExistingAnimal() {
+         val animalNum: Long = 12345
+         val dog = AnimalEntity(1, animalNum, "Fido", 4, null, 1, "Sporty and fine.")
+
+         every { animalService.getAnimalByNumber(animalNum) } answers {
+             dog
+         }
+
+         every { animalRepo.deleteByNumber(animalNum) } answers {
+             nothing
+         }
+
+         val response = animalService.deleteAnimal(animalNum)
+
+         assert(response.contains("Successful"))
+     }
+
 }

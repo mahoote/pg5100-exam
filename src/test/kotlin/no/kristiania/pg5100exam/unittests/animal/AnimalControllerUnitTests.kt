@@ -22,10 +22,7 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.put
+import org.springframework.test.web.servlet.*
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
@@ -139,6 +136,22 @@ class AnimalControllerUnitTests {
                     "    \"name\": \"Tony\",\n" +
                     "    \"health\": \"Loves to skate.\"\n" +
                     "}"
+        }
+            .andExpect { status { is2xxSuccessful() } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andReturn()
+    }
+
+    @Test
+    fun shouldDeleteExistingAnimal() {
+        val animalNum: Long = 12345
+
+        every { animalService.deleteAnimal(animalNum) } answers {
+            "Successful deletion."
+        }
+
+        mockMvc.delete("/api/shelter/delete?number=$animalNum") {
+            accept = MediaType.APPLICATION_JSON
         }
             .andExpect { status { is2xxSuccessful() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }

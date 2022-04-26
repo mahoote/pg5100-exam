@@ -11,4 +11,6 @@ interface AnimalRepo: JpaRepository<AnimalEntity, Long> {
 
     fun findByNumber(number: Long): AnimalEntity?
 
+    fun deleteByNumber(number: Long)
+
 }
