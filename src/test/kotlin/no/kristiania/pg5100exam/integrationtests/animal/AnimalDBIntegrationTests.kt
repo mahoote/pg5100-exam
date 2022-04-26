@@ -19,7 +19,7 @@ class AnimalDBIntegrationTests(@Autowired private val animalService: AnimalServi
     @Test
     fun shouldGetAllAnimals() {
         val result = animalService.getAnimals()
-        assert(result.size > 1)
+        assert(result.isNotEmpty())
     }
 
     @Test

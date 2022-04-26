@@ -17,7 +17,7 @@ class AnimalBreedDBIntegrationTests(@Autowired private val animalBreedService: A
     @Test
     fun shouldGetAllBreeds() {
         val result = animalBreedService.getBreeds()
-        assert(result.size > 1)
+        assert(result.isNotEmpty())
     }
 
     @Test

@@ -18,7 +18,7 @@ class AnimalTypeDBIntegrationTests(@Autowired private val animalTypeService: Ani
     @Test
     fun shouldGetAllTypes() {
         val result = animalTypeService.getTypes()
-        assert(result.size > 1)
+        assert(result.isNotEmpty())
     }
 
 }

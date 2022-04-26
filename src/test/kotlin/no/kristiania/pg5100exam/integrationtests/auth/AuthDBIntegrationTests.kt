@@ -17,7 +17,7 @@ class AuthDBIntegrationTests(@Autowired private val authService: AuthService) {
     @Test
     fun shouldGetAllAuthorities() {
         val result = authService.getAuthorities()
-        assert(result.size > 1)
+        assert(result.isNotEmpty())
     }
 
 }

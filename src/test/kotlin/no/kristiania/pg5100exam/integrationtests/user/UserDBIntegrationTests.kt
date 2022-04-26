@@ -20,8 +20,7 @@ class UserDBIntegrationTests(@Autowired private val userService: UserService) {
     @Test
     fun shouldGetAllUsers() {
         val result = userService.getUsers()
-
-        assert(result.size > 1)
+        assert(result.isNotEmpty())
     }
 
     @Test
