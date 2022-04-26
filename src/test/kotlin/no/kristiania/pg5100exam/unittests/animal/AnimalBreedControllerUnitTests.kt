@@ -3,7 +3,6 @@ package no.kristiania.pg5100exam.unittests.animal
 import io.mockk.every
 import io.mockk.mockk
 import no.kristiania.pg5100exam.models.animal.AnimalBreedEntity
-import no.kristiania.pg5100exam.models.animal.AnimalEntity
 import no.kristiania.pg5100exam.models.animal.AnimalTypeEntity
 import no.kristiania.pg5100exam.services.animal.AnimalBreedService
 import no.kristiania.pg5100exam.services.animal.AnimalService
@@ -63,6 +62,23 @@ class AnimalBreedControllerUnitTests {
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("$") {isArray()} }
+            .andReturn()
+    }
+
+    @Test
+    fun shouldGetBreed() {
+        val mammalType = AnimalTypeEntity(1, "Mammal")
+
+        val breedName = "Dog"
+        val dogBreed = AnimalBreedEntity(1, breedName, mammalType, mammalType.id)
+
+        every { animalBreedService.getBreed(breedName) } answers {
+            dogBreed
+        }
+
+        mockMvc.get("/api/shelter/breed?breed=$breedName")
+            .andExpect { status { isOk() } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andReturn()
     }
 
